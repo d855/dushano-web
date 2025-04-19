@@ -1,0 +1,16 @@
+---
+import {Image} from "astro:assets";
+import Nav from "./Nav.astro";
+import ThemeIcon from "./ThemeIcon.astro";
+import avatar from '../assets/dushano.jpg'
+---
+<header class="py-5 flex justify-between items-center">
+    <a href="/" class="flex items-center gap-2">
+        <Image src={avatar} class="size-10 rounded-full" alt="" />
+        Dušan Osmokrović
+    </a>
+	<div class="flex items-center gap-5">
+		<Nav />
+		<ThemeIcon />
+    </div>
+</header>

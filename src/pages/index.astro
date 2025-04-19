@@ -1,5 +1,6 @@
 ---
 import ArticleCard from "../components/ArticleCard.astro";
+import Metadata from "../components/Metadata.astro";
 import Layout from "../layouts/Layout.astro";
 
 // Fetch all markdown files from the blog directory
@@ -9,9 +10,9 @@ const posts = await Promise.all(
         const post = await resolver();
         return {
             ...post,
-            file: path
+            file: path,
         };
-    })
+    }),
 );
 
 // Sort posts by date in descending order (newest first)
@@ -22,26 +23,32 @@ const sortedPosts = posts.sort(
 );
 ---
 
-<Layout title="Home">
-    <h1 class="text-4xl">Software engineer and amatuer writer</h1>
-    <p class="mt-2 font-light font-sm">
+<Layout title="Dušan Osmokrović">
+    <Metadata
+        title="Home"
+        canonicalUrl="google.rs"
+        type="website"
+        slot="head"
+    />
+    <h1 class="text-4xl">Software Engineer & Amateur Writer</h1>
+    <p class="mt-2 font-sm">
         Maker of things that work. <br /> I solve tricky problems with clean, practical
         solutions that grow with your needs.
     </p>
 
-    <section class="mt-10">
-        <h2 class="text-2xl font-semibold">Latest</h2>
+    <section class="my-10">
+        <h2 class="uppercase">Latest</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
             {
                 sortedPosts.map((post) => (
-                    <ArticleCard
-                        title={post.frontmatter.title}
-                        description={post.frontmatter.description}
-                        image={post.frontmatter.image.url}
-                        imageAlt={post.frontmatter.image.alt}
-                        url={`/blog/${post.file.split("/").pop().replace(".md", "")}`}
-                    />
+						<ArticleCard
+								title={post.frontmatter.title}
+								description={post.frontmatter.description}
+								image={post.frontmatter.image.url}
+								imageAlt={post.frontmatter.image.alt}
+								url={`/blog/${post.file.split("/").pop().replace(".md", "")}`}
+						/>
                 ))
             }
         </div>

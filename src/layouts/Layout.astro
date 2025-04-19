@@ -1,14 +1,17 @@
 ---
-import Nav from "../components/Nav.astro";
-import Footer from "../layouts/Footer.astro";
 import "../styles/global.css";
+import Footer from "../layouts/Footer.astro";
+import Header from "../components/Header.astro";
+
 interface Props {
     title: string;
     description?: string;
 }
 
-const { title, description = "Software engineer and amatuer writer." } =
-    Astro.props;
+const {
+    title = "Dušan Osmokrović",
+    description = "Software engineer and amatuer writer.",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -25,107 +28,27 @@ const { title, description = "Software engineer and amatuer writer." } =
             href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
             rel="stylesheet"
         />
+        <slot name="head" />
         <script is:inline>
-            // Check for dark mode preference at the beginning
-            const userPreference = localStorage.getItem('theme');
-            const systemPreference = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            const theme = userPreference || systemPreference;
-            
-            // Apply the theme
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
+            if (
+                localStorage.theme === "dark" ||
+                (!("theme" in localStorage) &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ) {
+                document.documentElement.classList.add("dark");
             } else {
-                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.remove("dark");
             }
         </script>
-        <style is:global>
-            /* Add custom styles for light/dark mode that don't rely on Tailwind */
-            :root {
-                --text-color: #1f2937; /* dark gray for light mode */
-                --bg-color: #ffffff;   /* white for light mode */
-            }
-            
-            html.dark {
-                --text-color: #e5e7eb; /* light gray for dark mode */
-                --bg-color: #000000;   /* black for dark mode */
-            }
-            
-            body {
-                color: var(--text-color);
-                background-color: var(--bg-color);
-                transition: color 0.3s ease, background-color 0.3s ease;
-            }
-        </style>
     </head>
-    <body>
-        <!-- Static sidebar -->
-        <div class="lg:p-10 lg:fixed">
-            <Nav />
-            <button
-                id="theme-toggle"
-                class="mt-6 p-2 rounded-full transition-colors"
-                style="background-color: rgba(128, 128, 128, 0.1);"
-            >
-                <!-- Sun icon (for dark mode) -->
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id="sun-icon"
-                    class="h-5 w-5"
-                    style="display: none;"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                >
-                    <path
-                        fill-rule="evenodd"
-                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                        clip-rule="evenodd"></path>
-                </svg>
-                <!-- Moon icon (for light mode) -->
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id="moon-icon"
-                    class="h-5 w-5"
-                    style="display: none;"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                >
-                    <path
-                        d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-                    ></path>
-                </svg>
-            </button>
-        </div>
+    <body class="container mx-auto bg-white text-neutral-600 max-w-6xl dark:text-neutral-300 dark:bg-black">
 
-        <main class="lg:pl-68 p-10">
+        <Header />
+
+        <main class="">
             <slot />
         </main>
 
         <Footer />
-
-        <script>
-            // Theme toggle functionality with icon management
-            function updateThemeIcons() {
-                const isDark = document.documentElement.classList.contains('dark');
-                document.getElementById('sun-icon').style.display = isDark ? 'block' : 'none';
-                document.getElementById('moon-icon').style.display = isDark ? 'none' : 'block';
-            }
-            
-            // Initial icon setup
-            updateThemeIcons();
-            
-            // Toggle theme on button click
-            document.getElementById('theme-toggle').addEventListener('click', function() {
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('theme', 'light');
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('theme', 'dark');
-                }
-                
-                // Update icons after theme change
-                updateThemeIcons();
-            });
-        </script>
     </body>
 </html>

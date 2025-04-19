@@ -1,27 +1,36 @@
-<footer class="lg:pl-68">
-    <div
-        class="flex flex-col md:flex-row justify-between items-center pr-5 py-3"
-    >
-        <div>Let's chat</div>
-        <div class="flex flex-col items-end text-neutral-400">
-            <span id="time" class="time text-7xl uppercase"></span>
-            <span>Belgrade, Serbia</span>
-        </div>
-    </div>
+------
+<footer class="border-t border-neutral-300 dark:border-neutral-700">
+	<div class="flex flex-col">
+		<div class="flex justify-between pb-20">
+			<div class="pt-3 flex flex-col">
+				<h3 class="uppercase">Let's chat</h3>
+				<a href="mailto:dosmokrovic@yahoo.com" class="block mt-2 text-sm"> dosmokrovic@yahoo.com </a>
+			</div>
+			<div class="pt-3 flex flex-col items-end text-neutral-400">
+				<span id="time" class="time text-7xl uppercase"></span> <span>Belgrade, Serbia</span>
+			</div>
+		</div>
+
+		<div class="border-t border-neutral-300 dark:border-neutral-700 pt-3">
+			<p class="text-sm text-neutral-600 dark:text-neutral-300">&copy; Created by Dušan Osmokrović
+				in {new Date().getFullYear()}</p>
+		</div>
+	</div>
 </footer>
 
 <script>
     function getTime() {
         const now = new Date();
 
-        const belgradeTime = now.toLocaleTimeString("en-GB", {
-            timeZone: "Europe/Belgrade",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-        });
-
-        document.getElementById("time").textContent = belgradeTime;
+        const timeElement = document.getElementById("time");
+        if (timeElement) {
+            timeElement.textContent = now.toLocaleTimeString("en-GB", {
+                timeZone: "Europe/Belgrade",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true
+            });
+        }
     }
 
     getTime();

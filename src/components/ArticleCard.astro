@@ -21,12 +21,15 @@ const { title, description, image, imageAlt, url } = Astro.props;
         loading="eager"
         class="w-full h-auto aspect-square object-cover transition-transform duration-300 group-hover:scale-105"
     />
-    <div
-        class="absolute inset-0 bg-black opacity-0 group-hover:opacity-80 transition-opacity duration-500 flex items-end"
-    >
-        <h3 class="text-white px-4 py-3 w-full font-medium">
+    <div class="px-4 py-3  absolute inset-0 bg-black opacity-0 group-hover:opacity-90 transition-opacity duration-500 flex flex-col justify-between">
+        <h3 class="text-white w-full font-medium">
             {title}
         </h3>
+        <div class="flex justify-between text-sm">
+            <span>3 min read</span>
+
+            <span>2 days ago</span>
+        </div>
     </div>
     <a href={url} aria-label="Read full story" class="absolute inset-0"></a>
 </article>
