@@ -11,6 +11,8 @@ const posts = await Promise.all(
         return {
             ...post,
             file: path,
+            // Get the raw content from the post
+            content: post.rawContent ? post.rawContent() : post.compiledContent ? post.compiledContent() : '',
         };
     }),
 );
@@ -47,6 +49,8 @@ const sortedPosts = posts.sort(
 								description={post.frontmatter.description}
 								image={post.frontmatter.image.url}
 								imageAlt={post.frontmatter.image.alt}
+								publishDate={post.frontmatter.publishDate}
+								content={post.content}
 								url={`/blog/${post.file.split("/").pop().replace(".md", "")}`}
 						/>
                 ))

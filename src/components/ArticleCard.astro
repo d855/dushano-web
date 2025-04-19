@@ -1,5 +1,7 @@
 ---
 import { Image } from "astro:assets";
+import { formatRelativeDate } from "../utils/dateUtils";
+import { getReadingTime } from "../utils/textUtils";
 
 interface Props {
     title: string;
@@ -7,9 +9,13 @@ interface Props {
     image: string;
     imageAlt: string;
     url: string;
+    publishDate?: string;
+    content?: string;
 }
 
-const { title, description, image, imageAlt, url } = Astro.props;
+const { title, description, image, imageAlt, url, publishDate, content } = Astro.props;
+const relativeDate = publishDate ? formatRelativeDate(publishDate) : '';
+const readingTime = content ? getReadingTime(content) : '3 min read'; // Default fallback
 ---
 
 <article class="relative group overflow-hidden">
@@ -26,9 +32,9 @@ const { title, description, image, imageAlt, url } = Astro.props;
             {title}
         </h3>
         <div class="flex justify-between text-sm">
-            <span>3 min read</span>
+            <span>{readingTime}</span>
 
-            <span>2 days ago</span>
+            <span>{relativeDate}</span>
         </div>
     </div>
     <a href={url} aria-label="Read full story" class="absolute inset-0"></a>

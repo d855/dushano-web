@@ -12,6 +12,7 @@
     "@lucide/astro": "^0.501.0",
     "@tailwindcss/vite": "^4.1.4",
     "astro": "^5.7.3",
+    "date-fns": "^4.1.0",
     "tailwindcss": "^4.1.4"
   }
 }
