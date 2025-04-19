@@ -9,8 +9,6 @@ image:
 tags: ["performance", "optimization", "web development"]
 ---
 
-# Optimizing Performance in Modern Web Applications
-
 Performance isn't just a technical concern—it directly impacts user experience, conversion rates, and even SEO rankings. Here's how I approach performance optimization in modern web applications.
 
 ## Core Web Vitals and Beyond

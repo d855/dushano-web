@@ -3,58 +3,72 @@ import ArticleCard from "../components/ArticleCard.astro";
 import Metadata from "../components/Metadata.astro";
 import Layout from "../layouts/Layout.astro";
 
-// Fetch all markdown files from the blog directory
+interface BlogPost {
+	frontmatter: {
+		title: string;
+		publishDate: string;
+	};
+	file: string;
+	content: string;
+}
+
 const postImports = import.meta.glob("../blog/*.md");
 const posts = await Promise.all(
     Object.entries(postImports).map(async ([path, resolver]) => {
-        const post = await resolver();
+        const post = await resolver() as any;
         return {
             ...post,
             file: path,
-            // Get the raw content from the post
+
             content: post.rawContent ? post.rawContent() : post.compiledContent ? post.compiledContent() : '',
         };
     }),
 );
 
-// Sort posts by date in descending order (newest first)
 const sortedPosts = posts.sort(
-    (a, b) =>
+    (a: BlogPost, b: BlogPost) =>
         new Date(b.frontmatter.publishDate).valueOf() -
         new Date(a.frontmatter.publishDate).valueOf(),
-);
+).slice(0, 3);
 ---
 
 <Layout title="Dušan Osmokrović">
-    <Metadata
-        title="Home"
-        canonicalUrl="google.rs"
-        type="website"
-        slot="head"
-    />
-    <h1 class="text-4xl">Software Engineer & Amateur Writer</h1>
-    <p class="mt-2 font-sm">
-        Maker of things that work. <br /> I solve tricky problems with clean, practical
-        solutions that grow with your needs.
-    </p>
+	<Metadata title="Home"
+			  canonicalUrl="google.rs"
+			  type="website"
+			  slot="head"/>
+	<h1 class="text-4xl">Software Engineer & Amateur Writer</h1>
+	<p class="mt-2 font-sm">
+		Hey, I’m Dušan a web developer and lecturer with a focus on building clean, scalable applications.
+		I mostly work with the TALL stack (Tailwind, Alpine.js, Laravel, Livewire), but I also enjoy working with React,
+		TypeScript, and Inertia.js. Lately, I’ve been deep into API integrations, e-commerce platforms, and all things
+		performance-related.
+	</p>
 
-    <section class="my-10">
-        <h2 class="uppercase">Latest</h2>
+	<p class="mt-2 font-sm">
+		When I’m not coding, I’m teaching web development at SAE Institute, helping students learn PHP, JavaScript, and
+		how to bring real-world projects to life. I’m all about practical problem-solving and writing code that’s both
+		efficient and maintainable.
+	</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
+	<p class="mt-2 font-sm">
+		I love experimenting with new tools—whether it's self-hosted AI models, search indexing with Typesense, or
+		streamlining workflows with Docker and CI/CD. If something makes a project faster, cleaner, or more fun to
+		build, I’m probably into it.
+	</p>
+
+	<section class="my-10">
+		<h2 class="uppercase">Most recent</h2>
+
+		<div class="mt-3 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
             {
-                sortedPosts.map((post) => (
-						<ArticleCard
-								title={post.frontmatter.title}
-								description={post.frontmatter.description}
-								image={post.frontmatter.image.url}
-								imageAlt={post.frontmatter.image.alt}
-								publishDate={post.frontmatter.publishDate}
-								content={post.content}
-								url={`/blog/${post.file.split("/").pop().replace(".md", "")}`}
-						/>
+                sortedPosts.map((post: BlogPost) => (
+						<ArticleCard title={post.frontmatter.title}
+									 publishDate={post.frontmatter.publishDate}
+									 content={post.content}
+									 url={`/posts/${post.file.split("/").pop()?.replace(".md", "") ?? ''}`}/>
                 ))
             }
-        </div>
-    </section>
+		</div>
+	</section>
 </Layout>

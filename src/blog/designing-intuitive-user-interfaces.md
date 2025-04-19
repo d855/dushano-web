@@ -9,7 +9,6 @@ image:
 tags: ["design", "ui", "ux"]
 ---
 
-# Designing Intuitive User Interfaces: Principles and Practices
 
 Creating interfaces that users can navigate effortlessly requires a deep understanding of human psychology and careful attention to detail. Here are some principles I've found essential for designing intuitive UIs.
 

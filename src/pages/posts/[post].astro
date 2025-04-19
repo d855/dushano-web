@@ -1,0 +1,74 @@
+---
+import {Image} from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import Metadata from '../../components/Metadata.astro';
+import {formatRelativeDate} from '../../utils/dateUtils';
+import {getReadingTime} from '../../utils/textUtils';
+import '../../styles/blog-post.css';
+
+export async function getStaticPaths() {
+    const postImports = import.meta.glob('../../blog/*.md');
+
+	return await Promise.all(
+		Object.entries(postImports).map(async ([path, resolver]) => {
+			interface MarkdownPost {
+				rawContent?: () => string;
+				compiledContent: () => string;
+
+				[key: string]: any;
+			}
+
+			const post = await resolver() as MarkdownPost;
+			const slug = path.split('/').pop()?.replace('.md', '');
+
+			return {
+				params: {post: slug},
+				props: {
+					post: {
+						frontmatter: post.frontmatter,
+						compiledContent: post.compiledContent,
+						slug,
+						content: post.rawContent ? post.rawContent() : post.compiledContent ? post.compiledContent() : '',
+					}
+				}
+			};
+		})
+	);
+}
+
+const {post} = Astro.props;
+const {frontmatter, content} = post;
+const readingTime = getReadingTime(content);
+const relativeDate = formatRelativeDate(frontmatter.publishDate);
+---
+
+<Layout title={frontmatter.title}>
+	<Metadata title={frontmatter.title} description={frontmatter.description}
+			  canonicalUrl={`${Astro.site}posts/${post.slug}`} type="article" slot="head"/>
+
+	<article class="max-w-4xl mx-auto mb-32">
+		<header class="mb-8">
+            {frontmatter.image && (
+					<div class="mb-6">
+						<Image src={frontmatter.image.url} alt={frontmatter.image.alt || frontmatter.title} width={1200}
+							   height={330} class="w-full h-[530px] object-cover rounded-lg"/>
+					</div>
+            )}
+
+			<h1 class="text-4xl font-bold mb-2">{frontmatter.title}</h1>
+			<div class="flex items-center text-sm mb-4">
+				<span>{relativeDate}</span> <span class="mx-2">•</span>
+				<span>{readingTime}</span> <span class="mx-2">•</span>
+				{frontmatter.tags && frontmatter.tags.length > 0 && (
+					<div class="flex flex-wrap gap-2">
+						{frontmatter.tags.join('; ')}
+					</div>
+            )}
+			</div>
+		</header>
+
+		<div class="prose prose-lg max-w-none blog-content">
+			<Fragment set:html={post.compiledContent ? post.compiledContent() : ''}/>
+		</div>
+	</article>
+</Layout>

@@ -9,8 +9,6 @@ image:
 tags: ["web development", "architecture", "scalability"]
 ---
 
-# Building Scalable Web Applications with Modern Architecture
-
 When building web applications that need to scale, the architecture decisions you make early on will have long-lasting impacts on your project's success. In this post, I'll share some key principles and patterns I've learned from building applications that can handle growth.
 
 ## Microservices vs. Monoliths

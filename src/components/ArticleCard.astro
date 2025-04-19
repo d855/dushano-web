@@ -1,34 +1,22 @@
 ---
-import { Image } from "astro:assets";
 import { formatRelativeDate } from "../utils/dateUtils";
 import { getReadingTime } from "../utils/textUtils";
 
 interface Props {
     title: string;
-    description?: string;
-    image: string;
-    imageAlt: string;
     url: string;
     publishDate?: string;
     content?: string;
 }
 
-const { title, description, image, imageAlt, url, publishDate, content } = Astro.props;
+const { title, url, publishDate, content } = Astro.props;
 const relativeDate = publishDate ? formatRelativeDate(publishDate) : '';
 const readingTime = content ? getReadingTime(content) : '3 min read'; // Default fallback
 ---
 
-<article class="relative group overflow-hidden">
-    <Image
-        width={350}
-        height={350}
-        src={image}
-        alt={imageAlt}
-        loading="eager"
-        class="w-full h-auto aspect-square object-cover transition-transform duration-300 group-hover:scale-105"
-    />
-    <div class="px-4 py-3  absolute inset-0 bg-black opacity-0 group-hover:opacity-90 transition-opacity duration-500 flex flex-col justify-between">
-        <h3 class="text-white w-full font-medium">
+<article class="relative border border-dashed border-neutral-300 py-3 px-4  dark:bg-black transition-all duration-200 flex flex-col justify-between hover:border-neutral-800">
+    <div class="flex flex-col justify-between gap-5 h-full">
+        <h3 class="w-full font-medium">
             {title}
         </h3>
         <div class="flex justify-between text-sm">

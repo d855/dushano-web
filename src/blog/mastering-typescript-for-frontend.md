@@ -9,8 +9,6 @@ image:
 tags: ["typescript", "frontend", "javascript"]
 ---
 
-# Mastering TypeScript for Modern Frontend Development
-
 TypeScript has become an essential tool in modern frontend development. As projects grow in complexity, the benefits of strong typing become increasingly apparent. Here's how to make the most of TypeScript in your frontend projects.
 
 ## Beyond Basic Types

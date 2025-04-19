@@ -25,10 +25,13 @@ const { title, description, image, canonicalUrl, tags, type, publishDate } =
 
 <link rel="canonical" href={canonicalUrl} />
 
+<meta name="robot" content="follow, index" />
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content="Dušan Osmokrović" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalUrl} />
-<meta property="og:type" content={type} />
 {image && <meta property="og:image" content={image} />}
 
 <meta name="twitter:card" content="summary" />
