@@ -37,30 +37,29 @@ const sortedPosts = posts.sort(
 			  canonicalUrl="google.rs"
 			  type="website"
 			  slot="head"/>
-	<h1 class="text-4xl">Software Engineer & Amateur Writer</h1>
-	<p class="mt-2 font-sm">
-		Hey, I’m Dušan a web developer and lecturer with a focus on building clean, scalable applications.
-		I mostly work with the TALL stack (Tailwind, Alpine.js, Laravel, Livewire), but I also enjoy working with React,
-		TypeScript, and Inertia.js. Lately, I’ve been deep into API integrations, e-commerce platforms, and all things
-		performance-related.
-	</p>
+	<h1 class="text-4xl">Software Engineer</h1>
 
-	<p class="mt-2 font-sm">
-		When I’m not coding, I’m teaching web development at SAE Institute, helping students learn PHP, JavaScript, and
-		how to bring real-world projects to life. I’m all about practical problem-solving and writing code that’s both
-		efficient and maintainable.
-	</p>
+	<div class="font-sm">
+		<p class="mt-2 font-sm">
+			Hi, I’m Dušan.
+			I build things for the web, teach what I know, and try to keep things simple.
+		</p>
 
-	<p class="mt-2 font-sm">
-		I love experimenting with new tools—whether it's self-hosted AI models, search indexing with Typesense, or
-		streamlining workflows with Docker and CI/CD. If something makes a project faster, cleaner, or more fun to
-		build, I’m probably into it.
-	</p>
+		<p>
+			That’s pretty much it.
+		</p>
+
+		<p class="mt-2">
+			Most of my time goes into real-world projects where reliability matters more than buzzwords.
+			I’m always looking for better ways to solve problems without overcomplicating things.
+		</p>
+	</div>
+
 
 	<section class="my-10">
 		<h2 class="uppercase">Most recent</h2>
 
-		<div class="mt-3 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
+		<div class="mt-3 grid grid-cols-1 gap-2 divide-y divide-neutral-300 dark:divide-neutral-600">
             {
                 sortedPosts.map((post: BlogPost) => (
 						<ArticleCard title={post.frontmatter.title}
